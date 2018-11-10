@@ -30,37 +30,6 @@ html.loading(lang='en', data-textdirection='ltr')
     // END Custom CSS
   body.vertical-layout.vertical-menu-modern.1-column.bg-full-screen-image.menu-expanded.blank-page.blank-page(data-open='click', data-menu='vertical-menu-modern', data-col='1-column')
     //MODALS
-    #registerModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
-        .modal-dialog.modal-lg(role='document')
-            .modal-content
-                .modal-header(style='border-bottom: none;')
-                    h4.modal-title.text-center 
-                        img(src='/assets/images/logo/logo-dark.png', alt='branding logo')
-                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                .modal-body
-                    .card-header.border-0(style='padding-top: 1.5rem; padding-bottom: 0rem;')
-                        h6.card-subtitle.line-on-side.text-muted.text-center.font-small-3.pt-2(style='margin: -38px 0 20px;')
-                            span Register to MaGulang
-                    fieldset
-                        .row
-                            .col-md-4
-                                label First Name
-                                input#firstName.form-control(type='text' placeholder='Enter First Name')
-                            .col-md-4
-                                label Middle Name
-                                input#middleName.form-control(type='text' placeholder='Enter Middle Name')
-                            .col-md-4
-                                label Last Name
-                                input#lastName.form-control(type='text' placeholder='Enter Last Name')
-                        br
-                        .row
-                            .col-md-8
-                                label Bank Account Number
-                                input#bankAccount.form-control(type='text' placeholder='Enter Bank Account Number')
-                        .row
-                            .col-md-12
-                                button.btn.btn-outline-success.btn-round(style='float: right') Register
                             
     .app-content.content
       .content-wrapper
@@ -120,16 +89,17 @@ html.loading(lang='en', data-textdirection='ltr')
                 $('#registerModal').modal('show')
             })
             $(document).on('click', '#loginButton', function(){
-                $.post('/index/login',{
+                $.post('/index/login/anak',{
                   username:$('#username').val(),
                   userpassword:$('#userpassword').val()
                 }).done(data=>{
                   if(data.valid){
-                    //- location.href='/magulang'
-                    location.href='/magulang'
+                    location.href='/index/anak'
+                    console.log("LOGGED IN")
                   }
                   else{
-                    location.href='/index'
+                    location.href='/index/anak'
+                    console.log("LOGGED IN")
                   }
                 })
             })
