@@ -53,12 +53,6 @@ html.loading(lang='en', data-textdirection='ltr')
                             .col-md-4
                                 label Last Name
                                 input#lastName.form-control(type='text' placeholder='Enter Last Name')
-                            .col-md-4
-                                label User Name
-                                input#userName.form-control(type='text' placeholder='Enter User Name')
-                            .col-md-4
-                                label Password
-                                input#passWord.form-control(type='password' placeholder='Enter Password')
                         br
                         .row
                             .col-md-8
@@ -66,7 +60,7 @@ html.loading(lang='en', data-textdirection='ltr')
                                 input#bankAccount.form-control(type='text' placeholder='Enter Bank Account Number')
                         .row
                             .col-md-12
-                                button#submitButton.btn.btn-outline-success.btn-round(style='float: right') Register
+                                button.btn.btn-outline-success.btn-round(style='float: right') Register
                             
     .app-content.content
       .content-wrapper
@@ -84,11 +78,11 @@ html.loading(lang='en', data-textdirection='ltr')
                   .card-content
                     .card-body
                         fieldset.form-group.position-relative.has-icon-left
-                          input#username.form-control(type='text', placeholder='Your Username')
+                          input#username.form-control(type='text', placeholder='Your Username', required='')
                           .form-control-position
                             i.ft-user
                         fieldset.form-group.position-relative.has-icon-left
-                          input#userpassword.form-control(type='password', placeholder='Enter Password')
+                          input#userpassword.form-control(type='password', placeholder='Enter Password', required='')
                           .form-control-position
                             i.ft-key
                         .form-group.row
@@ -120,53 +114,10 @@ html.loading(lang='en', data-textdirection='ltr')
     // BEGIN PAGE LEVEL JS
     script(src='/assets/js/scripts/forms/form-login-register.min.js', type='text/javascript')
     // END PAGE LEVEL JS
-    script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
     script(type='text/javascript').
         $(document).ready(function(){
             $(document).on('click', '#registerButton', function(){
                 $('#registerModal').modal('show')
-                $('#submitButton').click(function(){
-                    swal({
-                    title:'Are you sure?', 
-                    icon:'warning',
-                    buttons: {
-                      no:'No',
-                      yes:'Yes'
-                    }
-                    }).then((value)=>{
-                    if(value == 'yes'){
-                        //- $.post('/index/signup',{
-                        //- firstName:$('#firstName'),
-                        //- middleName:$('#middleName'),
-                        //- lastName:$('#lastName'),
-                        //- userName:$('#userName'),
-                        //- passWord:$('#passWord'),
-                        //- bankAccount:$('#bankAccount')
-                        //- }).done(data=>{
-                        //-   location.href='/index'
-                        //- })
-                        $.post('/index/signup',{
-                          firstName:$('#firstName').val(),
-                          middleName:$('#middleName').val(),
-                          lastName:$('#lastName').val(),
-                          userName:$('#userName').val(),
-                          passWord:$('#passWord').val(),
-                          bankAccount:$('#bankAccount').val()
-                        }).done(data=>{
-                          swal({
-                            title:"Success",
-                            icon:"success"
-                          }).then((value)=>{
-                            location.href='/index'
-                          })
-                        })
-                    }
-                    else{
-                      console.log("SHIT")
-                    }
-                  })
-                
-            })
             })
             $(document).on('click', '#loginButton', function(){
                 $.post('/index/login',{
@@ -182,7 +133,5 @@ html.loading(lang='en', data-textdirection='ltr')
                   }
                 })
             })
-            
-
         })
     
