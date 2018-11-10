@@ -8,4 +8,7 @@ var router = express.Router();
 router.get('/', function(req, res){
     res.render('home/views/index')
 })
+router.get('/magulang', (req, res) => {
+    res.render('home/views/magulangIndex')
+})
 exports.index = router;
