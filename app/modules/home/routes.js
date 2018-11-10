@@ -10,6 +10,9 @@ router.get('/magulang', function(req, res){
     console.log(magulangSession)
     res.render('home/views/magulangIndex')
 })
+router.get('/anakIndex', function(req, res){
+    res.render('home/views/anakIndex')
+})
 router.get('/', function(req, res){
     res.render('home/views/index')
     magulangSession = "";
