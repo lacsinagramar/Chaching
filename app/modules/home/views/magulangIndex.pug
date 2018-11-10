@@ -434,7 +434,7 @@ html.loading(lang='en', data-textdirection='ltr')
 						.row
 							.col-md-12
 								button#submitButton.btn.btn-outline-success.btn-round(style='float: right') Register
-		
+
 					// BEGIN VENDOR JS
 					script(src='/assets/vendors/js/vendors.min.js', type='text/javascript')
 					// BEGIN VENDOR JS
@@ -475,13 +475,15 @@ html.loading(lang='en', data-textdirection='ltr')
 								}
 								}).then((value)=>{
 									if(value=='yes'){
-										$.post('/updateGoal',{id:id}).done(data=>{
-											swal({
-												title:"Success",
-												icon:"success"
-											}).then((value)=>{
-												location.href='/magulang'
-											})
+										$.post('/updateGoal',{
+											id:id,
+											}).done(data=>{
+												swal({
+													title:"Success",
+													icon:"success"
+												}).then((value)=>{
+													location.href='/magulang'
+												})
 										})
 									}
 								})

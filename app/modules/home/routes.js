@@ -71,7 +71,7 @@ router.post('/updateGoal',function(req,res){
     var queryString = `UPDATE tbl_goal SET boolStatus = 1 WHERE intGoalId = ${req.body.id}`
     db.query(queryString,(err,results,fields)=>{
         if(err) throw err;
-        var d = [5,10,20,50,100,500,1000]
+        var d = [5,10,20,50,100,200,500,1000]
         var queryString1 = `SELECT * FROM tbl_goal WHERE intGoalId = ${req.body.id}`
         db.query(queryString1,(err,results1,fields)=>{
             var goalPrice = results1[0].dblGoal
@@ -94,13 +94,13 @@ router.post('/updateGoal',function(req,res){
             ctr.push(Math.ceil(r3/d1[2]))
             for(var i = 0; i<ctr.length; i++){
                 var iinsert = {denomination:d1[i],count:ctr[i]}
-                var queryString = `INSERT INTO tbl_level(intLevel,jsonLevel,intGoalId)
+                var queryString1 = `INSERT INTO tbl_level(intLevel,jsonLevel,intGoalId)
                 VALUES(${i+1},'${JSON.stringify(iinsert)}',${req.body.id})`
-                db.query(queryString,(err,results,fields)=>{
+                db.query(queryString1,(err,results2,fields)=>{
                     if(err) throw err;
+                    res.send(results)
                 })
             }
-            res.send(results)
         })
     })
 })

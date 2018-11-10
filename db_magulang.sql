@@ -116,10 +116,11 @@ CREATE TABLE `tbl_level` (
   `intLevel` int(11) NOT NULL,
   `jsonLevel` json NOT NULL,
   `intGoalId` int(11) NOT NULL,
+  `dtmDeadLine` datetime NOT NULL,
   PRIMARY KEY (`intLevelId`),
   KEY `intGoalId_idx` (`intGoalId`),
   CONSTRAINT `intGoalId` FOREIGN KEY (`intGoalId`) REFERENCES `tbl_goal` (`intGoalId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +129,6 @@ CREATE TABLE `tbl_level` (
 
 LOCK TABLES `tbl_level` WRITE;
 /*!40000 ALTER TABLE `tbl_level` DISABLE KEYS */;
-INSERT INTO `tbl_level` VALUES (1,3,'{\"count\": 1, \"denomination\": 500}',1),(2,2,'{\"count\": 4, \"denomination\": 100}',1),(3,1,'{\"count\": 4, \"denomination\": 50}',1);
 /*!40000 ALTER TABLE `tbl_level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-11  3:27:23
+-- Dump completed on 2018-11-11  5:49:17
