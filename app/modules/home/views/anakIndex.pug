@@ -364,19 +364,18 @@ html.loading(lang='en', data-textdirection='ltr')
 				.content-header.row
 				.content-body
 					// Revenue, Hit Rate & Deals
+					button#addGoalButton.btn.btn-block.btn-success(type="button") + Add Goal
+					br
 					.row
-						.col-6
-							.card
-								.card-header
-									h4.card-title Revenue
-									button#addGoalButton(type="button") add goal +
-									a.heading-elements-toggle
-										i.la.la-ellipsis-v.font-medium-3 
-									.heading-elements
-										ul.list-inline.mb-0
-											li
-												a(data-action='reload')
-													i.ft-rotate-cw
+						each chore in chores
+							.col-6
+								.card
+									.card-header
+										h4.card-title #{chore.strChoreName}
+										a.heading-elements-toggle
+											i.la.la-ellipsis-v.font-medium-3 
+										.heading-elements
+											p #{chore.dtmDeadLine}
 												
 	#addGoalModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
 		.modal-dialog.modal-lg(role='document')

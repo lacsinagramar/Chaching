@@ -41,7 +41,14 @@ router.get('/magulang/chat', function(req, res){
     res.render('home/views/magulangChat', {session: magulangSession});
 })
 router.get('/anakIndex', function(req, res){
-    res.render('home/views/anakIndex')
+    var queryString = `SELECT * FROM tbl_goal
+    JOIN tbl_level ON tbl_goal.intGoalId = tbl_level.intGoalId
+    JOIN tbl_chores ON tbl_level.intLevelId = tbl_chores.intLevelId
+    WHERE tbl_goal.intAnakId = ?`
+    db.query(queryString, [anakSession.anak.intAnakId], (err, results, fields) => {
+        if(err) console.log(err)
+        res.render('home/views/anakIndex', {chores: results})
+    })
 })
 router.get('/', function(req, res){
     res.render('home/views/index')
