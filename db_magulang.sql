@@ -30,10 +30,11 @@ CREATE TABLE `tbl_anak` (
   `strFirstName` varchar(45) NOT NULL,
   `strMiddleName` varchar(45) DEFAULT NULL,
   `strLastName` varchar(45) NOT NULL,
+  `intBankAccount` int(11) NOT NULL,
   PRIMARY KEY (`intAnakId`),
   KEY `intUserId_idx` (`intMagulangId`),
   CONSTRAINT `intUserId` FOREIGN KEY (`intMagulangId`) REFERENCES `tbl_magulang` (`intUserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +43,7 @@ CREATE TABLE `tbl_anak` (
 
 LOCK TABLES `tbl_anak` WRITE;
 /*!40000 ALTER TABLE `tbl_anak` DISABLE KEYS */;
+INSERT INTO `tbl_anak` VALUES (1,'crissy','123',1,'Crisaldo','Ibay','Santos',0);
 /*!40000 ALTER TABLE `tbl_anak` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,12 +85,13 @@ CREATE TABLE `tbl_goal` (
   `dblGoal` double NOT NULL,
   `intAnakId` int(11) NOT NULL,
   `intMagulangId` int(11) NOT NULL,
+  `boolStatus` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intGoalId`),
   KEY `intAnakId_idx` (`intAnakId`),
   KEY `intMagulangId_idx` (`intMagulangId`),
   CONSTRAINT `intAnakId` FOREIGN KEY (`intAnakId`) REFERENCES `tbl_anak` (`intAnakId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `intMagulangId` FOREIGN KEY (`intMagulangId`) REFERENCES `tbl_magulang` (`intUserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +100,7 @@ CREATE TABLE `tbl_goal` (
 
 LOCK TABLES `tbl_goal` WRITE;
 /*!40000 ALTER TABLE `tbl_goal` DISABLE KEYS */;
+INSERT INTO `tbl_goal` VALUES (1,1000,1,1,1);
 /*!40000 ALTER TABLE `tbl_goal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +119,7 @@ CREATE TABLE `tbl_level` (
   PRIMARY KEY (`intLevelId`),
   KEY `intGoalId_idx` (`intGoalId`),
   CONSTRAINT `intGoalId` FOREIGN KEY (`intGoalId`) REFERENCES `tbl_goal` (`intGoalId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +128,7 @@ CREATE TABLE `tbl_level` (
 
 LOCK TABLES `tbl_level` WRITE;
 /*!40000 ALTER TABLE `tbl_level` DISABLE KEYS */;
+INSERT INTO `tbl_level` VALUES (1,3,'{\"count\": 1, \"denomination\": 500}',1),(2,2,'{\"count\": 4, \"denomination\": 100}',1),(3,1,'{\"count\": 4, \"denomination\": 50}',1);
 /*!40000 ALTER TABLE `tbl_level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-11  0:02:57
+-- Dump completed on 2018-11-11  3:27:23
