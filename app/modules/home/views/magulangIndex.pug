@@ -371,7 +371,7 @@ html.loading(lang='en', data-textdirection='ltr')
 								.card-head
 										.card-header
 												h4.card-title Wishlist
-								button#addChildButton(type="button") add + 
+								button#addChildButton(type="button") add child + 
 								.card-content
 										.card-body
 												.table-responsive
@@ -382,11 +382,14 @@ html.loading(lang='en', data-textdirection='ltr')
 																				th Wish Amount
 																				th Action
 																tbody#tableBody
-																		//- each bidder in bidders
-																		//-     tr
-																		//- 			a.accept.dropdown-item(href='javascript:void(0)')
-																		//- 				i.icon-eye
-																		//- 				|  Grant
+																		each goal in goals
+																			tr
+																				td=goal.strLastName + "," + goal.strFirstName 
+																				td=goal.dblGoal
+																				td
+																					a.accept.dropdown-item(wishid=`${goal.intGoalId}` href='javascript:void(0)')
+																						i.icon-eye
+																						|  Grant
 	#addChildModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
 		.modal-dialog.modal-lg(role='document')
 			.modal-content
@@ -416,6 +419,9 @@ html.loading(lang='en', data-textdirection='ltr')
 							.col-md-4
 								label Password
 								input#passWord.form-control(type='password' placeholder='Enter Password')
+							.col-md-4
+								label Password
+								input#bankAccount.form-control(type='text' placeholder='Enter Bank Account')
 						br
 						.row
 							.col-md-12
@@ -449,6 +455,29 @@ html.loading(lang='en', data-textdirection='ltr')
 						$(document).ready(function(){
 							$('#table').dataTable()
 						})
+						$(document).on('click', '.accept', function(){
+							var id = $(this).attr('wishid')
+							console.log(id)
+							swal({
+								title:'Are you sure?', 
+								icon:'warning',
+								buttons: {
+								no:'No',
+								yes:'Yes'
+								}
+								}).then((value)=>{
+									if(value=='yes'){
+										$.post('/updateGoal',{id:id}).done(data=>{
+											swal({
+												title:"Success",
+												icon:"success"
+											}).then((value)=>{
+												location.href='/magulang'
+											})
+										})
+									}
+								})
+						})
 						$(document).on('click', '#addChildButton', function(){
 							$('#addChildModal').modal('show')
 							$('#submitButton').click(function(){
@@ -467,6 +496,7 @@ html.loading(lang='en', data-textdirection='ltr')
 									lastName:$('#lastName').val(),
 									userName:$('#userName').val(),
 									passWord:$('#passWord').val(),
+									bankAccount:$('#bankAccount').val()
 									}).done(data=>{
 									swal({
 										title:"Success",

@@ -135,16 +135,6 @@ html.loading(lang='en', data-textdirection='ltr')
                     }
                     }).then((value)=>{
                     if(value == 'yes'){
-                        //- $.post('/index/signup',{
-                        //- firstName:$('#firstName'),
-                        //- middleName:$('#middleName'),
-                        //- lastName:$('#lastName'),
-                        //- userName:$('#userName'),
-                        //- passWord:$('#passWord'),
-                        //- bankAccount:$('#bankAccount')
-                        //- }).done(data=>{
-                        //-   location.href='/index'
-                        //- })
                         $.post('/index/signup',{
                           firstName:$('#firstName').val(),
                           middleName:$('#middleName').val(),
