@@ -14,10 +14,11 @@ router.get('/magulang', function(req, res){
         if(err) throw err;
         console.log(magulangSession.magulang.intMagulangId)
         console.log(results1)
-        res.render('home/views/magulangIndex',{goals:results1})
+        res.render('home/views/magulangIndex',{goals:results1, session: magulangSession})
     })
-    
-
+})
+router.get('/magulang/chat', function(req, res){
+    res.render('home/views/magulangChat', {session: magulangSession});
 })
 router.get('/anakIndex', function(req, res){
     res.render('home/views/anakIndex')
