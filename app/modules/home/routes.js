@@ -17,6 +17,26 @@ router.get('/magulang', function(req, res){
         res.render('home/views/magulangIndex',{goals:results1, session: magulangSession})
     })
 })
+router.get('/magulang/granted', function(req, res){
+    var queryString = `SELECT * FROM tbl_goal WHERE intMagulangId = ?`
+    db.query(queryString,[magulangSession.magulang.intUserId], (err, results, fields) => {
+        if(err) console.log(err)
+
+        res.render('home/views/magulangGranted', {session: magulangSession, goals: results})
+    })
+})
+router.post('/query/goal', function(req, res){
+    db.query('SELECT * FROM tbl_level WHERE intGoalId = ?',[req.body.id], (err, results, fields) => {
+        if(err) console.log(err)
+        res.send(results);
+    })
+})
+router.post('/query/chores', function(req, res){
+    db.query('SELECT * FROM tbl_chores WHERE intLevelId = ?',[req.body.levelId], (err, results, fields) => {
+        if(err) console.log(err)
+        res.send(results);
+    })
+})
 router.get('/magulang/chat', function(req, res){
     res.render('home/views/magulangChat', {session: magulangSession});
 })

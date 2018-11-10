@@ -384,19 +384,19 @@ html.loading(lang='en', data-textdirection='ltr')
 														table#table.table.table-white-space.table-bordered.row-grouping.display.no-wrap.icheck.table-middle
 																thead
 																		tr
-																				th Child
+																				th Wish ID
 																				th Wish Amount
 																				th Action
 																tbody#tableBody
 																		each goal in goals
 																			tr
-																				td=goal.strLastName + "," + goal.strFirstName 
+																				td=goal.intGoalId 
 																				td=goal.dblGoal
 																				td
-																					a.accept.dropdown-item(wishid=`${goal.intGoalId}` href='javascript:void(0)')
+																					a.view.dropdown-item(wishid=`${goal.intGoalId}` href='javascript:void(0)')
 																						i.icon-eye
-																						|  Grant
-	#addChildModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
+																						|  View
+	#goalModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
 		.modal-dialog.modal-lg(role='document')
 			.modal-content
 				.modal-header(style='border-bottom: none;')
@@ -407,33 +407,19 @@ html.loading(lang='en', data-textdirection='ltr')
 				.modal-body
 					.card-header.border-0(style='padding-top: 1.5rem; padding-bottom: 0rem;')
 						h6.card-subtitle.line-on-side.text-muted.text-center.font-small-3.pt-2(style='margin: -38px 0 20px;')
-							span Register your Child
+							span Details
 					fieldset
+						h3 Level 1
 						.row
-							.col-md-4
-								label First Name
-								input#firstName.form-control(type='text' placeholder='Enter First Name')
-							.col-md-4
-								label Middle Name
-								input#middleName.form-control(type='text' placeholder='Enter Middle Name')
-							.col-md-4
-								label Last Name
-								input#lastName.form-control(type='text' placeholder='Enter Last Name')
+							.col-md-12#level1
 						br
+						h3 Level 2
 						.row
-							.col-md-6
-								label User Name
-								input#userName.form-control(type='text' placeholder='Enter User Name')
-							.col-md-6
-								label Password
-								input#passWord.form-control(type='password' placeholder='Enter Password')
-							.col-md-4
-								label Password
-								input#bankAccount.form-control(type='text' placeholder='Enter Bank Account')
+							.col-md-12#level2
 						br
+						h3 Level 3
 						.row
-							.col-md-12
-								button#submitButton.btn.btn-outline-success.btn-round(style='float: right') Register
+							.col-md-12#level3
 		
 					// BEGIN VENDOR JS
 					script(src='/assets/vendors/js/vendors.min.js', type='text/javascript')
@@ -462,62 +448,106 @@ html.loading(lang='en', data-textdirection='ltr')
 					script(type='text/javascript').
 						$(document).ready(function(){
 							$('#table').dataTable()
-						})
-						$(document).on('click', '.accept', function(){
-							var id = $(this).attr('wishid')
-							console.log(id)
-							swal({
-								title:'Are you sure?', 
-								icon:'warning',
-								buttons: {
-								no:'No',
-								yes:'Yes'
-								}
-								}).then((value)=>{
-									if(value=='yes'){
-										$.post('/updateGoal',{id:id}).done(data=>{
-											swal({
-												title:"Success",
-												icon:"success"
-											}).then((value)=>{
-												location.href='/magulang'
+							$(document).on('click', '.view', function(){
+								$.post('/query/goal', {id: $(this).attr('wishid')})
+								.done(function(data){
+									console.log(data)
+									for(var i=0;i<data.length;i++){
+										if(data[i].intLevel == 1){
+											var jsonNow = JSON.parse(data[i].jsonLevel);
+											$.post('/query/chores', {levelId: data[i].intLevelId}).done(function(data2){
+												console.log(data2)
+												for(var p=0; p< data2.length; p++){
+													$('#level1').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" value="${data2[p].strChoreName}" readonly level="1" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" value="${data2[p].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
+												var newCount = eval(jsonNow.count+'-'+data2.length)
+												for(var o=0; o<newCount; o++){
+													$('#level1').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" level="1" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
 											})
-										})
+										}
+										if(data[i].intLevel == 2){
+											var jsonNow = JSON.parse(data[i].jsonLevel);
+											$.post('/query/chores', {levelId: data[i].intLevelId}).done(function(data2){
+												for(var p=0; p< data2.length; p++){
+													$('#level2').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" value="${data2[p].strChoreName}" readonly level="2" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" value="${data2[p].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
+												var newCount = eval(jsonNow.count+'-'+data2.length)
+												for(var o=0; o<newCount; o++){
+													$('#level2').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" level="2" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
+											})
+										}
+										if(data[i].intLevel == 3){
+											var jsonNow = JSON.parse(data[i].jsonLevel);
+											var jsonCount= jsonNow.count
+											$.post('/query/chores', {levelId: data[i].intLevelId}).done(function(data2){
+												console.log(data2,3)
+												for(var p=0; p< data2.length; p++){
+													$('#level3').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" value="${data2[p].strChoreName}" readonly level="3" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" value="${data2[p].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
+												console.log(jsonCount,newCount,data2.length)
+												var newCount = jsonCount-data2.length
+												for(var o=0; o<newCount; o++){
+													$('#level3').append(`<div class='row'><div class="col-md-6">
+														<label>Chore Description</label>
+														<input class="form-control" level="3" type="text" placeholder="Enter Chore Description" />
+														<div class='col-md-6'>
+														<label>Chore Deadline</label>
+														<input class="form-control" readonly level="1" type="text" placeholder="Deadline" />
+														</div>
+													</div>
+													</div>`)
+												}
+											})
+										}
 									}
+									$('#goalModal').modal('show')
 								})
-						})
-						$(document).on('click', '#addChildButton', function(){
-							$('#addChildModal').modal('show')
-							$('#submitButton').click(function(){
-								swal({
-								title:'Are you sure?', 
-								icon:'warning',
-								buttons: {
-								no:'No',
-								yes:'Yes'
-								}
-								}).then((value)=>{
-								if(value == 'yes'){
-									$.post('/index/addChild',{
-									firstName:$('#firstName').val(),
-									middleName:$('#middleName').val(),
-									lastName:$('#lastName').val(),
-									userName:$('#userName').val(),
-									passWord:$('#passWord').val(),
-									bankAccount:$('#bankAccount').val()
-									}).done(data=>{
-									swal({
-										title:"Success",
-										icon:"success"
-									}).then((value)=>{
-										location.href='/magulang'
-									})
-									})
-								}
-								else{
-								console.log("SHIT")
-								}
 							})
-							
-						})
+							$('#goalModal').on('hidden.bs.modal', function(){
+								$('#level1').empty()
+								$('#level2').empty()
+								$('#level3').empty()
+							})
 						})
