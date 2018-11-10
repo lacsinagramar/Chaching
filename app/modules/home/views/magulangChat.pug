@@ -29,11 +29,13 @@ html.loading(lang='en', data-textdirection='ltr')
 		link(rel='stylesheet', type='text/css', href='/assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css')
 		link(rel='stylesheet', type='text/css', href='/assets/vendors/css/tables/extensions/rowReorder.dataTables.min.css')
 		link(rel='stylesheet', type='text/css', href='/assets/vendors/css/tables/extensions/responsive.dataTables.min.css')
+		link(rel='stylesheet', type='text/css', href='/assets/css/pages/chat-application.css')
+
 		// END Page Level CSS
 		// BEGIN Custom CSS
 		link(rel='stylesheet', type='text/css', href='../../../assets/css/style.css')
 		// END Custom CSS
-	body.vertical-layout.vertical-menu-modern.2-columns.menu-expanded.fixed-navbar(data-open='click', data-menu='vertical-menu-modern', data-col='2-columns')
+	body.vertical-layout.vertical-menu-modern.2-columns.menu-expanded.fixed-navbar.chat-application(data-open='click', data-menu='vertical-menu-modern', data-col='2-columns')
 		// fixed-top
 		nav.header-navbar.navbar-expand-md.navbar.navbar-with-menu.navbar-without-dd-arrow.fixed-top.navbar-semi-dark.navbar-shadow
 			.navbar-wrapper
@@ -361,35 +363,111 @@ html.loading(lang='en', data-textdirection='ltr')
 						//-   li.active
 						//-     a.menu-item(href='dashboard-sales.html', data-i18n='nav.dash.sales') Sales
 		.app-content.content
-			.content-wrapper
-				.content-header.row
-				.content-body
-					// Revenue, Hit Rate & Deals
-					.row
-						.col-12
-							.card
-								.card-head
-									.card-header
-										h4.card-title Wishlist
-										.heading-elements
-											button#addChildButton.btn.btn-block.btn-primary.btn-sm(type='button')
-												i.ft-plus.white
-												|  Add Child
-								.card-content
-										.card-body
-												.table-responsive
-														table#table.table.table-white-space.table-bordered.row-grouping.display.no-wrap.icheck.table-middle
-																thead
-																		tr
-																				th Child
-																				th Wish Amount
-																				th Action
-																tbody#tableBody
-																		//- each bidder in bidders
-																		//-     tr
-																		//- 			a.accept.dropdown-item(href='javascript:void(0)')
-																		//- 				i.icon-eye
-																		//- 				|  Grant
+			.sidebar-left.sidebar-fixed
+				.sidebar
+					.sidebar-content.card.d-none.d-lg-block
+						.card-body.chat-fixed-search
+							fieldset.form-group.position-relative.has-icon-left.m-0
+								input#iconLeft4.form-control(type='text', placeholder='Search user')
+								.form-control-position
+									i.ft-search
+						#users-list.list-group.position-relative
+							.users-list-padding.media-list
+								a.media.bg-blue-grey.bg-lighten-5.border-right-info.border-right-2(href='#')
+									.media-left.pr-1
+										span.avatar.avatar-md.avatar-online
+											img.media-object.rounded-circle(src='/assets/images/portrait/small/avatar-s-7.png', alt='Generic placeholder image')
+											i
+									.media-body.w-100
+										h6.list-group-item-heading
+											| Wayne Burton
+											span.font-small-3.float-right.info Today
+										p.list-group-item-text.text-muted.mb-0
+											i.ft-check.primary.font-small-2
+											|  Can we connect?
+			.content-right
+				.content-wrapper
+					.content-header.row
+					.content-body
+						section.chat-app-window
+							.badge.badge-default.mb-1 Chat History
+							.chats
+								.chats
+									.chat
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='right', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-1.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p How can we help? We're here for you!
+									.chat.chat-left
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='left', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-7.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p Hey John, I am looking for the best admin template.
+												p Could you please help me to find it out?
+											.chat-content
+												p It should be Bootstrap 4 compatible.
+									.chat
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='right', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-1.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p Absolutely!
+											.chat-content
+												p Modern admin is the responsive bootstrap 4 admin template.
+									p.time 1 hours ago
+									.chat.chat-left
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='left', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-7.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p Looks clean and fresh UI.
+											.chat-content
+												p It's perfect for my next project.
+											.chat-content
+												p How can I purchase it?
+									.chat
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='right', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-1.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p Thanks, from ThemeForest.
+									.chat.chat-left
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='left', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-7.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p I will purchase it for sure.
+											.chat-content
+												p Thanks.
+									.chat
+										.chat-avatar
+											a.avatar(data-toggle='tooltip', href='#', data-placement='right', title='', data-original-title='')
+												img(src='/assets/images/portrait/small/avatar-s-1.png', alt='avatar')
+										.chat-body
+											.chat-content
+												p Great, Feel free to get in touch on
+											.chat-content
+												p https://pixinvent.ticksy.com/
+						section.chat-app-form
+							form.chat-app-input.d-flex
+								fieldset.form-group.position-relative.has-icon-left.col-10.m-0
+									.form-control-position
+										i.icon-emoticon-smile
+									input#iconLeft4.form-control(type='text', placeholder='Type your message')
+									.form-control-position.control-position-right
+										i.ft-image
+								fieldset.form-group.position-relative.has-icon-left.col-2.m-0
+									button.btn.btn-info(type='button')
+										i.la.la-paper-plane-o.d-lg-none
+										span.d-none.d-lg-block Send
 	#addChildModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
 		.modal-dialog.modal-lg(role='document')
 			.modal-content
@@ -426,65 +504,28 @@ html.loading(lang='en', data-textdirection='ltr')
 							.col-md-12
 								button#submitButton.btn.btn-outline-success.btn-round(style='float: right') Register
 		
-					// BEGIN VENDOR JS
-					script(src='/assets/vendors/js/vendors.min.js', type='text/javascript')
-					// BEGIN VENDOR JS
-					// BEGIN PAGE VENDOR JS
-					script(src='/assets/vendors/js/charts/chart.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/charts/raphael-min.js', type='text/javascript')
-					script(src='/assets/vendors/js/charts/morris.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js', type='text/javascript')
-					script(src='/assets/data/jvector/visitor-data.js', type='text/javascript')
-					// END PAGE VENDOR JS
-					// BEGIN MODERN JS
-					script(src='/assets/js/core/app-menu.min.js', type='text/javascript')
-					script(src='/assets/js/core/app.min.js', type='text/javascript')
-					script(src='/assets/js/scripts/customizer.min.js', type='text/javascript')
-					// END MODERN JS
-					// BEGIN PAGE LEVEL JS
-					script(src='/assets/js/scripts/pages/dashboard-sales.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/tables/jquery.dataTables.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/tables/datatable/dataTables.responsive.min.js', type='text/javascript')
-					script(src='/assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js', type='text/javascript')
-					// END PAGE LEVEL JS
-					script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
-					script(type='text/javascript').
-						$(document).ready(function(){
-							$('#table').dataTable()
-						})
-						$(document).on('click', '#addChildButton', function(){
-							$('#addChildModal').modal('show')
-							$('#submitButton').click(function(){
-								swal({
-								title:'Are you sure?', 
-								icon:'warning',
-								buttons: {
-								no:'No',
-								yes:'Yes'
-								}
-								}).then((value)=>{
-								if(value == 'yes'){
-									$.post('/index/addChild',{
-									firstName:$('#firstName').val(),
-									middleName:$('#middleName').val(),
-									lastName:$('#lastName').val(),
-									userName:$('#userName').val(),
-									passWord:$('#passWord').val(),
-									}).done(data=>{
-									swal({
-										title:"Success",
-										icon:"success"
-									}).then((value)=>{
-										location.href='/magulang'
-									})
-									})
-								}
-								else{
-								console.log("SHIT")
-								}
-							})
-							
-						})
-						})
+		// BEGIN VENDOR JS
+		script(src='/assets/vendors/js/vendors.min.js', type='text/javascript')
+		// BEGIN VENDOR JS
+		// BEGIN PAGE VENDOR JS
+		script(src='/assets/vendors/js/charts/chart.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/charts/raphael-min.js', type='text/javascript')
+		script(src='/assets/vendors/js/charts/morris.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/charts/jvector/jquery-jvectormap-world-mill.js', type='text/javascript')
+		script(src='/assets/data/jvector/visitor-data.js', type='text/javascript')
+		// END PAGE VENDOR JS
+		// BEGIN MODERN JS
+		script(src='/assets/js/core/app-menu.min.js', type='text/javascript')
+		script(src='/assets/js/core/app.min.js', type='text/javascript')
+		script(src='/assets/js/scripts/customizer.min.js', type='text/javascript')
+		// END MODERN JS
+		// BEGIN PAGE LEVEL JS
+		script(src='/assets/js/scripts/pages/dashboard-sales.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/tables/jquery.dataTables.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/tables/datatable/dataTables.responsive.min.js', type='text/javascript')
+		script(src='/assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js', type='text/javascript')
+		// END PAGE LEVEL JS
+		script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
+		script(src='/assets/js/scripts/pages/chat-application.js', type='text/javascript')

@@ -8,7 +8,10 @@ var anakSession = {};
 
 router.get('/magulang', function(req, res){
     console.log(magulangSession)
-    res.render('home/views/magulangIndex')
+    res.render('home/views/magulangIndex', {session: magulangSession})
+})
+router.get('/magulang/chat', function(req, res){
+    res.render('home/views/magulangChat', {session: magulangSession});
 })
 router.get('/anakIndex', function(req, res){
     res.render('home/views/anakIndex')
