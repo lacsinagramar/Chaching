@@ -1,14 +1,14 @@
 {
-  "name": "express-boilerplate",
+  "name": "MaGulang",
   "version": "1.0.0",
-  "description": "A quick and simple ExpressJS boilerplate",
+  "description": "Startup App for Hackathon",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PUP-CCIS/express-boilerplate.git"
+    "url": "git+https://github.com/lacsinagramar/MaGulang.git"
   },
   "keywords": [
     "expressjs",
@@ -16,9 +16,9 @@
   ],
   "author": "Gramar Lacsina, Joshua Rae Macaya, Froilan Sam Malibiran",
   "bugs": {
-    "url": "https://github.com/PUP-CCIS/express-boilerplate/issues"
+    "url": "https://github.com/lacsinagramar/MaGulang.git"
   },
-  "homepage": "https://github.com/PUP-CCIS/express-boilerplate#readme",
+  "homepage": "https://github.com/lacsinagramar/MaGulang.git",
   "dependencies": {
     "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
