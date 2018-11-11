@@ -44,8 +44,8 @@ html.loading(lang='en', data-textdirection='ltr')
 								i.ft-menu.font-large-1
 						li.nav-item.mr-auto
 							a.navbar-brand(href='index.html')
-								img.brand-logo(alt='modern admin logo', src='/assets/images/logo/logo.png')
-								h3.brand-text MaGulang
+								//- img.brand-logo(alt='modern admin logo', src='/assets/images/logo/logo.png')
+								h3.brand-text Chaching
 						li.nav-item.d-none.d-md-block.float-right
 							a.nav-link.modern-nav-toggle.pr-0(data-toggle='collapse')
 								i.toggle-icon.ft-toggle-right.font-medium-3.white(data-ticon='ft-toggle-right')
@@ -459,21 +459,23 @@ html.loading(lang='en', data-textdirection='ltr')
 								})
 							})
 							var data = !{JSON.stringify(chores)}
-							$('#savings').text(`Current Savings: P ${data[0].intSavings.toFixed(2)}/P ${data[0].dblGoal.toFixed(2)}`);
-							$('#doneButton').attr('levelId', `${data[0].intLevelId}`)
-							for(var i =0 ;i< data.length; i++){
-								var jsonNgayon = JSON.parse(data[i].jsonLevel)
-								if(data[i].booStatus == 2) continue;
-								$(`#level${data[i].intLevel}`).append(`<div class="col-6">
-									<div class="card">
-										<div class="card-header">
-										<h4 class="card-title">${data[i].strChoreName}</h4><a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"> </i></a>
-										<div class="heading-elements">
-											<p>P ${jsonNgayon.denomination.toFixed(2)}</p>
+							if(data.length>0){
+								$('#savings').text(`Current Savings: P ${data[0].intSavings.toFixed(2)}/P ${data[0].dblGoal.toFixed(2)}`);
+								$('#doneButton').attr('levelId', `${data[0].intLevelId}`)
+								for(var i =0 ;i< data.length; i++){
+									var jsonNgayon = JSON.parse(data[i].jsonLevel)
+									if(data[i].booStatus == 2) continue;
+									$(`#level${data[i].intLevel}`).append(`<div class="col-6">
+										<div class="card">
+											<div class="card-header">
+											<h4 class="card-title">${data[i].strChoreName}</h4><a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"> </i></a>
+											<div class="heading-elements">
+												<p>P ${jsonNgayon.denomination.toFixed(2)}</p>
+											</div>
+											</div>
 										</div>
-										</div>
-									</div>
-									</div>`)
+										</div>`)
+								}
 							}
 							console.log(data)
 							$('#table').dataTable()
