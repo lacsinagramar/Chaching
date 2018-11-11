@@ -367,15 +367,21 @@ html.loading(lang='en', data-textdirection='ltr')
 					button#addGoalButton.btn.btn-block.btn-success(type="button") + Add Goal
 					br
 					.row
-						each chore in chores
-							.col-6
-								.card
-									.card-header
-										h4.card-title #{chore.strChoreName}
-										a.heading-elements-toggle
-											i.la.la-ellipsis-v.font-medium-3 
-										.heading-elements
-											p #{chore.dtmDeadLine}
+						.col-12
+							#level1
+								h1 Level 1
+							#level2
+								h1 Level 2
+							#level3
+								h1 Level 3
+							//- .col-6
+							//- 	.card
+							//- 		.card-header
+							//- 			h4.card-title #{chore.strChoreName}
+							//- 			a.heading-elements-toggle
+							//- 				i.la.la-ellipsis-v.font-medium-3 
+							//- 			.heading-elements
+							//- 				p #{chore.dtmDeadLine}
 												
 	#addGoalModal.modal.fade.text-left(tabindex='-1', role='dialog', aria-hidden='true')
 		.modal-dialog.modal-lg(role='document')
@@ -427,23 +433,37 @@ html.loading(lang='en', data-textdirection='ltr')
 		script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
 		script(type='text/javascript').
 						$(document).ready(function(){
+							var data = !{JSON.stringify(chores)}
+							for(var i =0 ;i< data.length; i++){
+								$(`#level${data[i].intLevel}`).append(`<div class="col-6">
+									<div class="card">
+										<div class="card-header">
+										<h4 class="card-title">${data[i].strChoreName}</h4><a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"> </i></a>
+										<div class="heading-elements">
+											<p>${data[i].dtmDeadLine}</p>
+										</div>
+										</div>
+									</div>
+									</div>`)
+							}
+							console.log(data)
 							$('#table').dataTable()
-						})
-						$(document).on('click', '#addGoalButton', function(){
-							$('#addGoalModal').modal('show')
-							$('#submitButton').click(function(){
-								swal({
-								title:'Are you sure?', 
-								icon:'warning',
-								buttons: {
-								no:'No',
-								yes:'Yes'
-								}
-								}).then((value)=>{
-									$.post('/addGoal',{
-										dblGoal:$('#dblGoal').val()
-									}).done(data=>{
-										location.reload()
+							$(document).on('click', '#addGoalButton', function(){
+								$('#addGoalModal').modal('show')
+								$('#submitButton').click(function(){
+									swal({
+									title:'Are you sure?', 
+									icon:'warning',
+									buttons: {
+									no:'No',
+									yes:'Yes'
+									}
+									}).then((value)=>{
+										$.post('/addGoal',{
+											dblGoal:$('#dblGoal').val()
+										}).done(data=>{
+											location.reload()
+										})
 									})
 								})
 							})

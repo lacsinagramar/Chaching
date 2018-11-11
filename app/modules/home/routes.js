@@ -34,7 +34,7 @@ router.post('/query/goal', function(req, res){
 router.post('/query/chores', function(req, res){
     db.query('SELECT * FROM tbl_chores WHERE intLevelId = ?',[req.body.levelId], (err, results, fields) => {
         if(err) console.log(err)
-        res.send(results);
+        res.send({levelId: req.body.levelId, data:results});
     })
 })
 router.get('/magulang/chat', function(req, res){
@@ -105,9 +105,10 @@ router.post('/updateGoal',function(req,res){
                 VALUES(${i+1},'${JSON.stringify(iinsert)}',${req.body.id})`
                 db.query(queryString1,(err,results2,fields)=>{
                     if(err) throw err;
-                    res.send(results)
+                    
                 })
             }
+            res.send(results)
         })
     })
 })
@@ -143,6 +144,16 @@ router.post('/addGoal', function(req, res){
     VALUES(?,?,?)`
     console.log(magulangSession.magulang)
     db.query(queryString,[anakSession.anak.intAnakId,anakSession.anak.intMagulangId,req.body.dblGoal],(err,results,fields)=>{
+        if(err) throw err;
+        console.log(results)
+        res.send(results)
+    })
+})
+router.post('/assignChore', function(req, res){
+    var queryString = `INSERT INTO tbl_chores(intLevelId,strChoreName)
+    VALUES(?,?)`
+    console.log(req.body.choreName)
+    db.query(queryString,[req.body.id,req.body.choreName],(err,results,fields)=>{
         if(err) throw err;
         console.log(results)
         res.send(results)
