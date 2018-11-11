@@ -407,6 +407,7 @@ html.loading(lang='en', data-textdirection='ltr')
 							span Details
 					fieldset
 						h3 Level 1
+						button#confirmButton.btn.btn-success(value='100') Confirm
 						.row
 							.col-md-12#level1
 						br
@@ -444,7 +445,37 @@ html.loading(lang='en', data-textdirection='ltr')
 					script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
 					script(type='text/javascript').
 						$(document).ready(function(){
+							$(document).on('click', '.assign', function(){
+								swal({
+								title:'Are you sure?', 
+								icon:'warning',
+								buttons: {
+								no:'Cancel',
+								yes:'Assign'
+								}
+								}).then((value)=>{	
+								if(value=='yes'){
+										$.post('/assignChore',{
+											id: $(this).attr('levelId'),
+											choreName:$(this).parents('.row').find('.choreName').val()
+											}).done(data=>{
+												swal({
+													title:"Success",
+													icon:"success"
+												}).then((value)=>{
+													location.href='/magulang/granted'
+												})
+										})
+									}
+								})
+							})
 							$('#table').dataTable()
+							$(document).on('click', '#confirmButton', function(){
+								var saving = $(this).val();
+								$.post('/addSavings',{saving:saving}).done(data=>{
+									location.reload();
+								})
+							})
 							$(document).on('click', '.view', function(){
 								$.post('/query/goal', {id: $(this).attr('wishid')})
 								.done(function(data){
@@ -452,82 +483,78 @@ html.loading(lang='en', data-textdirection='ltr')
 									for(var i=0;i<data.length;i++){
 										var levelIdNow = data[i].intLevelId
 										if(data[i].intLevel == 1){
-											$('#level1').append(`<div style='row'>
+											$('#level1').append(`<div style='row deadline-row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
-													<input class="form-control" value="${data[i].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+													<input class="form-control" value="${data[i].dtmDeadLine}" level="1" type="text" placeholder="Deadline" />
 												</div>
 											</div>
 											<br>
 											<br>`)
-											var jsonNow = JSON.parse(data[0].jsonLevel);
+											var jsonNow = JSON.parse(data[i].jsonLevel);
 											var save = jsonNow
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
 												console.log(data2)
-												for(var p=0; p< data2.length; p++){
+												for(var p=0; p< data2.data.length; p++){
 													$('#level1').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" value="${data2[p].strChoreName}" readonly level="1" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="1" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2[p].intChoreId}'>Done</button>
-														</div>
 													</div>`)
 												}
-												console.log('hello',save,data2.length)
-												var newCount = eval(save.count+'-'+data2.length)
+												var newCount = eval(save.count+'-'+data2.data.length)
 												for(var o=0; o<newCount; o++){
 													$('#level1').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" level="1" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control choreName" level="1" type="text" placeholder="Enter Chore Description" />
 													</div>
 														<div class='col-md-3'>
-															<button class="btn btn-sm btn-primary" levelId='${levelIdNow}'>Assign</button>
+															<button class="btn btn-sm btn-primary assign" levelId='${data2.levelId}'>Assign</button>
 														</div>
 													</div>`)
 												}
+												
 											})
 										}
-										else if(data[i].intLevel == 2){
-											$('#level2').append(`<div style='row'>
+										if(data[i].intLevel == 2){
+											$('#level2').append(`<div style='row deadline-row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
-													<input class="form-control" value="${data[i].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+													<input class="form-control" value="${data[i].dtmDeadLine}" level="1" type="datetime-local" readonly placeholder="Deadline" />
 												</div>
 											</div>
 											<br>
 											<br>`)
-											var jsonNow = JSON.parse(data[1].jsonLevel);
+											var jsonNow = JSON.parse(data[i].jsonLevel);
 											var save = jsonNow
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
-												for(var p=0; p< data2.length; p++){
+												for(var p=0; p< data2.data.length; p++){
 													$('#level2').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" value="${data2[p].strChoreName}" readonly level="2" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="2" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2[p].intChoreId}'>Done</button>
-														</div>
+														
 													</div>`)
 												}
-												var newCount = eval(save.count+'-'+data2.length)
+												var newCount = eval(save.count+'-'+data2.data.length)
+												console.log(data2)
 												for(var o=0; o<newCount; o++){
 													$('#level2').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" level="2" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control choreName" level="2" type="text" placeholder="Enter Chore Description" />
 													</div>
 														<div class='col-md-3'>
-															<button class="btn btn-sm btn-primary" levelId='${levelIdNow}'>Assign</button>
+															<button class="btn btn-sm btn-primary assign" levelId='${data2.levelId}'>Assign</button>
 														</div>
 													</div>`)
 												}
 											})
 										}
-										else if(data[i].intLevel == 3){
-											$('#level3').append(`<div style='row'>
+										if(data[i].intLevel == 3){
+											$('#level3').append(`<div style='row deadline-row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
-													<input class="form-control" value="${data[i].dtmDeadLine}" readonly level="1" type="text" placeholder="Deadline" />
+													<input class="form-control" value="${data[i].dtmDeadLine}" level="1" type="datetime-local" readonly placeholder="Deadline" />
 												</div>
 											</div>
 											<br>
@@ -536,25 +563,23 @@ html.loading(lang='en', data-textdirection='ltr')
 											var jsonCount= jsonNow.count
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
 												console.log(data2,3)
-												for(var p=0; p< data2.length; p++){
+												for(var p=0; p< data2.data.length; p++){
 													$('#level3').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" value="${data2[p].strChoreName}" readonly level="3" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="3" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2[p].intChoreId}'>Done</button>
-														</div>
+														
 													</div>`)
 												}
 												console.log(jsonCount,newCount,data2.length)
-												var newCount = jsonCount-data2.length
+												var newCount = jsonCount-data2.data.length
 												for(var o=0; o<newCount; o++){
 													$('#level3').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
-														<input class="form-control" level="3" type="text" placeholder="Enter Chore Description" />
+														<input class="form-control choreName" level="3" type="text" placeholder="Enter Chore Description" />
 													</div>
 														<div class='col-md-3'>
-															<button class="btn btn-sm btn-primary" levelId='${levelIdNow}'>Assign</button>
+															<button class="btn btn-sm btn-primary assign" levelId='${data2.levelId}'>Assign</button>
 														</div>
 													</div>`)
 												}
