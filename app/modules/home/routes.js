@@ -44,6 +44,7 @@ router.get('/anakIndex', function(req, res){
     var queryString = `SELECT * FROM tbl_goal
     JOIN tbl_level ON tbl_goal.intGoalId = tbl_level.intGoalId
     JOIN tbl_chores ON tbl_level.intLevelId = tbl_chores.intLevelId
+    JOIN tbl_anak ON tbl_goal.intAnakId = tbl_anak.intAnakId
     WHERE tbl_goal.intAnakId = ?`
     db.query(queryString, [anakSession.anak.intAnakId], (err, results, fields) => {
         if(err) console.log(err)
@@ -55,9 +56,9 @@ router.get('/', function(req, res){
 })
 router.get('/login/anak', function(req, res){
     res.render('home/views/anak')
-    magulangSession = "";
 })
 router.post('/login', function(req, res){
+    magulangSession.magulang = {}
     var queryString = `SELECT * FROM tbl_magulang WHERE strUserName = ? AND strPassword =?`
     db.query(queryString,[req.body.username,req.body.userpassword],(err,results,fields)=>{
         if(err) throw err;
@@ -168,5 +169,20 @@ router.post('/signup', function(req, res){
         res.send(results)
     })
 })
-
+router.post('/done', function(req, res){
+    db.query('UPDATE tbl_level SET booStatus = 1 WHERE intLevelId = ?', [req.body.id], (err, results, fields) =>{
+        if(err) console.log(err)
+        res.send().end()
+    })
+})
+router.post('/addSavings', function(req, res){
+    db.query('UPDATE tbl_anak SET intSavings = intSavings + ? where intAnakId = ?', [req.body.saving,1], (err, results, fields) =>{
+            
+        if(err) console.log(err)
+        db.query('UPDATE tbl_level SET booStatus=2 WHERE intLevel=1',(err,results,fields)=>{
+            res.send().end()
+        })
+        })     
+    
+    })
 exports.index = router;

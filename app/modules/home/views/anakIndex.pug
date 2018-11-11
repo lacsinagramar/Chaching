@@ -365,11 +365,20 @@ html.loading(lang='en', data-textdirection='ltr')
 				.content-body
 					// Revenue, Hit Rate & Deals
 					button#addGoalButton.btn.btn-block.btn-success(type="button") + Add Goal
+					
 					br
 					.row
 						.col-12
+							center
+								h1#timer.card-title
+								h4#savings Current Savings: 
 							#level1
-								h1 Level 1
+								.row
+									.col-md-2
+										h1 Level 1
+									.col-md-2
+										button#doneButton.btn.btn-success Done!
+								br
 							#level2
 								h1 Level 2
 							#level3
@@ -431,16 +440,36 @@ html.loading(lang='en', data-textdirection='ltr')
 		script(src='/assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js', type='text/javascript')
 		// END PAGE LEVEL JS
 		script(src='/assets/js/scripts/sweetalert.min.js', type='text/javascript')
+		script(src='/assets/js/scripts/strftime.js', type='text/javascript')
+		script(src='/assets/js/scripts/countdown.js', type='text/javascript')
 		script(type='text/javascript').
 						$(document).ready(function(){
+							var $timer = $('#timer');
+								if($timer.length){
+									$timer.countdown(new Date('11/11/2018 17:00:00'), function(event){
+										$(this).html(event.strftime(`%d:%H:%M:%S`));
+									})
+								}
+							$(document).on('click','#doneButton', function(){
+								$.post('/done', {id: $(this).attr('levelId')}).done(function(){
+									swal({
+										title:'Success', 
+										icon:'success',
+									})
+								})
+							})
 							var data = !{JSON.stringify(chores)}
+							$('#savings').text(`Current Savings: P ${data[0].intSavings.toFixed(2)}/P ${data[0].dblGoal.toFixed(2)}`);
+							$('#doneButton').attr('levelId', `${data[0].intLevelId}`)
 							for(var i =0 ;i< data.length; i++){
+								var jsonNgayon = JSON.parse(data[i].jsonLevel)
+								if(data[i].booStatus == 2) continue;
 								$(`#level${data[i].intLevel}`).append(`<div class="col-6">
 									<div class="card">
 										<div class="card-header">
 										<h4 class="card-title">${data[i].strChoreName}</h4><a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"> </i></a>
 										<div class="heading-elements">
-											<p>${data[i].dtmDeadLine}</p>
+											<p>P ${jsonNgayon.denomination.toFixed(2)}</p>
 										</div>
 										</div>
 									</div>

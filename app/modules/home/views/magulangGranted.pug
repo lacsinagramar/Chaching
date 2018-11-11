@@ -407,6 +407,7 @@ html.loading(lang='en', data-textdirection='ltr')
 							span Details
 					fieldset
 						h3 Level 1
+						button#confirmButton.btn.btn-success(value='100') Confirm
 						.row
 							.col-md-12#level1
 						br
@@ -469,6 +470,12 @@ html.loading(lang='en', data-textdirection='ltr')
 								})
 							})
 							$('#table').dataTable()
+							$(document).on('click', '#confirmButton', function(){
+								var saving = $(this).val();
+								$.post('/addSavings',{saving:saving}).done(data=>{
+									location.reload();
+								})
+							})
 							$(document).on('click', '.view', function(){
 								$.post('/query/goal', {id: $(this).attr('wishid')})
 								.done(function(data){
@@ -479,7 +486,7 @@ html.loading(lang='en', data-textdirection='ltr')
 											$('#level1').append(`<div style='row deadline-row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
-													<input class="form-control" value="${data[i].dtmDeadLine}" level="1" type="datetime-local" readonly placeholder="Deadline" />
+													<input class="form-control" value="${data[i].dtmDeadLine}" level="1" type="text" placeholder="Deadline" />
 												</div>
 											</div>
 											<br>
@@ -493,9 +500,6 @@ html.loading(lang='en', data-textdirection='ltr')
 														<label>Chore Description</label>
 														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="1" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2.data[p].intChoreId}'>Done</button>
-														</div>
 													</div>`)
 												}
 												var newCount = eval(save.count+'-'+data2.data.length)
@@ -529,9 +533,7 @@ html.loading(lang='en', data-textdirection='ltr')
 														<label>Chore Description</label>
 														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="2" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2.data[p].intChoreId}'>Done</button>
-														</div>
+														
 													</div>`)
 												}
 												var newCount = eval(save.count+'-'+data2.data.length)
@@ -566,9 +568,7 @@ html.loading(lang='en', data-textdirection='ltr')
 														<label>Chore Description</label>
 														<input class="form-control" value="${data2.data[p].strChoreName}" readonly level="3" type="text" placeholder="Enter Chore Description" />
 													</div>
-														<div class='col-md-3'>
-															<button class="btn btn-sm btn-success" choreId='${data2.data[p].intChoreId}'>Done</button>
-														</div>
+														
 													</div>`)
 												}
 												console.log(jsonCount,newCount,data2.length)
