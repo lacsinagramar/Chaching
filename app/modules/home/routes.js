@@ -105,9 +105,9 @@ router.post('/updateGoal',function(req,res){
                 VALUES(${i+1},'${JSON.stringify(iinsert)}',${req.body.id})`
                 db.query(queryString1,(err,results2,fields)=>{
                     if(err) throw err;
-                    res.send(results)
                 })
             }
+            res.send(results)
         })
     })
 })

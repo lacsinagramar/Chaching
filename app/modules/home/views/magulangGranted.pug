@@ -44,8 +44,8 @@ html.loading(lang='en', data-textdirection='ltr')
 								i.ft-menu.font-large-1
 						li.nav-item.mr-auto
 							a.navbar-brand(href='index.html')
-								img.brand-logo(alt='modern admin logo', src='/assets/images/logo/logo.png')
-								h3.brand-text MaGulang
+								//- img.brand-logo(alt='modern admin logo', src='/assets/images/logo/logo.png')
+								h3.brand-text Chaching
 						li.nav-item.d-none.d-md-block.float-right
 							a.nav-link.modern-nav-toggle.pr-0(data-toggle='collapse')
 								i.toggle-icon.ft-toggle-right.font-medium-3.white(data-ticon='ft-toggle-right')
@@ -460,7 +460,8 @@ html.loading(lang='en', data-textdirection='ltr')
 											</div>
 											<br>
 											<br>`)
-											var jsonNow = JSON.parse(data[i].jsonLevel);
+											var jsonNow = JSON.parse(data[0].jsonLevel);
+											var save = jsonNow
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
 												console.log(data2)
 												for(var p=0; p< data2.length; p++){
@@ -473,7 +474,8 @@ html.loading(lang='en', data-textdirection='ltr')
 														</div>
 													</div>`)
 												}
-												var newCount = eval(jsonNow.count+'-'+data2.length)
+												console.log('hello',save,data2.length)
+												var newCount = eval(save.count+'-'+data2.length)
 												for(var o=0; o<newCount; o++){
 													$('#level1').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
@@ -486,7 +488,7 @@ html.loading(lang='en', data-textdirection='ltr')
 												}
 											})
 										}
-										if(data[i].intLevel == 2){
+										else if(data[i].intLevel == 2){
 											$('#level2').append(`<div style='row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
@@ -495,7 +497,8 @@ html.loading(lang='en', data-textdirection='ltr')
 											</div>
 											<br>
 											<br>`)
-											var jsonNow = JSON.parse(data[i].jsonLevel);
+											var jsonNow = JSON.parse(data[1].jsonLevel);
+											var save = jsonNow
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
 												for(var p=0; p< data2.length; p++){
 													$('#level2').append(`<div class='row'><div class="col-md-5">
@@ -507,7 +510,7 @@ html.loading(lang='en', data-textdirection='ltr')
 														</div>
 													</div>`)
 												}
-												var newCount = eval(jsonNow.count+'-'+data2.length)
+												var newCount = eval(save.count+'-'+data2.length)
 												for(var o=0; o<newCount; o++){
 													$('#level2').append(`<div class='row'><div class="col-md-5">
 														<label>Chore Description</label>
@@ -520,7 +523,7 @@ html.loading(lang='en', data-textdirection='ltr')
 												}
 											})
 										}
-										if(data[i].intLevel == 3){
+										else if(data[i].intLevel == 3){
 											$('#level3').append(`<div style='row'>
 												<div class='col-md-4'>
 													<label>Chore Deadline</label>
@@ -529,7 +532,7 @@ html.loading(lang='en', data-textdirection='ltr')
 											</div>
 											<br>
 											<br>`)
-											var jsonNow = JSON.parse(data[i].jsonLevel);
+											var jsonNow = JSON.parse(data[2].jsonLevel);
 											var jsonCount= jsonNow.count
 											$.post('/query/chores', {levelId: levelIdNow}).done(function(data2){
 												console.log(data2,3)
